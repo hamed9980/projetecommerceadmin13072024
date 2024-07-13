@@ -1,0 +1,41 @@
+import React, { useState } from 'react';
+
+const RemoveCheckedElements = () => {
+  const initialElements = [
+    { id: 1, label: 'Element 1', checked: false },
+    { id: 2, label: 'Element 2', checked: false },
+    { id: 3, label: 'Element 3', checked: false },
+  ];
+
+  const [elements, setElements] = useState(initialElements);
+
+  const handleCheckboxChange = (id) => {
+    const updatedElements = elements.map((element) =>
+      element.id === id ? { ...element, checked: !element.checked } : element
+    );
+    setElements(updatedElements);
+  };
+
+  const handleRemoveChecked = () => {
+    const filteredElements = elements.filter((element) => !element.checked);
+    setElements(filteredElements);
+  };
+
+  return (
+    <div>
+      {elements.map((element) => (
+        <div key={element.id}>
+          <input
+            type="checkbox"
+            checked={element.checked}
+            onChange={() => handleCheckboxChange(element.id)}
+          />
+          <label>{element.label}</label>
+        </div>
+      )}
+      <button onClick={handleRemoveChecked}>Remove Checked Elements</button>
+    </div>
+  );
+};
+
+export default RemoveCheckedElements;

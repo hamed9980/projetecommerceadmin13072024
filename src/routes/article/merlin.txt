@@ -1,0 +1,45 @@
+import React, { useState } from 'react';
+
+const FormComponent = () => {
+  const [formData, setFormData] = useState({});
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // You can now access the form data in the formData state
+    console.log(formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="firstName">First Name</label>
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="lastName">Last Name</label>
+        <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          onChange={handleInputChange}
+        />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default FormComponent;

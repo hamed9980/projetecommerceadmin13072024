@@ -1,0 +1,33 @@
+import React, { useState } from 'react';
+
+const CheckboxGroup = () => {
+  const [checkedValues, setCheckedValues] = useState({});
+
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+    setCheckedValues({ ...checkedValues, [name]: checked });
+  };
+
+  const options = Array.from({ length: 10 }, (_, index) => `Option ${index + 1}`);
+
+  return (
+    <div>
+      {options.map((option, index) => (
+        <div key={index}>
+          <label>
+            <input
+              type="checkbox"
+              name={`option${index + 1}`}
+              checked={checkedValues[`option${index + 1}`] || false}
+              onChange={handleCheckboxChange}
+            />
+            {option}
+          </label>
+        </div>
+      ))}
+      <button onClick={() => console.log(checkedValues)}>Get Checked Values</button>
+    </div>
+  );
+};
+
+export default CheckboxGroup;

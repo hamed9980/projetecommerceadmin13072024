@@ -1,0 +1,78 @@
+// Assuming you have a MongoDB connection and express app set up
+const express = require('express');
+const app = express();
+const MongoClient = require('mongodb').MongoClient;
+
+// Check if the record exists before saving
+app.get('/checkIfExists/:recordId', async (req, res) => {
+  const recordId = req.params.recordId;
+  const client = await MongoClient.connect('mongodb://localhost:27017', { useUnifiedTopology: true });
+  const db = client.db('yourdb');
+  const collection = db.collection('yourcollection');
+  const result = await collection.findOne({ _id: recordId });
+
+  if (result) {
+    res.json({ exists: true });
+  } else {
+    res.json({ exists: false });
+  }
+});
+
+// Save the record
+app.post('/saveRecord', async (req, res) => {
+  const record = req.body;
+  const client = await MongoClient.connect('mongodb://localhost:27017', { useUnifiedTopology: true });
+  const db = client.db('yourdb');
+  const collection = db.collection('yourcollection');
+  await collection.insertOne(record);
+  res.json({ message: 'Record saved' });
+});
+
+app.listen(3001, () => {
+  console.log('Server running on port 3001');
+});
+import React, { useState } from 'react';
+import axios from 'axios';
+
+const MyComponent = () => {
+  const [recordExists, setRecordExists] = useState(false);
+
+  const checkIfExists = async (recordId) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/checkIfExists/${recordId}`);
+      setRecordExists(response.data.exists);
+    } catch (error) {
+      console.error('Error checking if record exists:', error);
+    }
+  };
+
+  const saveRecord = async (record) => {
+    if (!recordExists) {
+      try {
+        await axios.post('http://localhost:3001/saveRecord', record);
+        console.log('Record saved');
+      } catch (error) {
+        console.error('Error saving record:', error);
+      }
+    } else {
+      console.log('Record already exists');
+    }
+  };
+
+  const exampleRecord = {
+    _id: '123',
+    // Other fields
+  };
+
+  // Check if record exists before saving
+  checkIfExists(exampleRecord._id);
+
+  // Save the record
+  saveRecord(exampleRecord);
+
+  return (
+    // Your component JSX
+  );
+};
+
+export default MyComponent;

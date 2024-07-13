@@ -1,0 +1,45 @@
+import React, { useState } from 'react';
+
+const ArrayForm = () => {
+  const [items, setItems] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (inputValue.trim() !== '') {
+      setItems([...items, inputValue]);
+      setInputValue(''); // Clear input field after submitting
+    }
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          placeholder="Enter an item"
+        />
+        <button type="submit">Add Item</button>
+      </form>
+
+      <ul>
+        {items.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+
+      {/* Code to handle submission of 'items' array */}
+      <button onClick={() => submitItems(items)}>Submit Items</button> 
+    </div>
+  );
+};
+
+// Function that handles the submission of the 'items' array
+const submitItems = (items) => {
+  // Code to submit the 'items' array to your desired endpoint or perform any actions
+  console.log('Submitted Items:', items);
+};
+
+export default ArrayForm;

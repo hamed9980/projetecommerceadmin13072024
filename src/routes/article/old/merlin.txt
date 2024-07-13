@@ -1,0 +1,31 @@
+import React, { useRef } from 'react';
+
+const CheckboxGroup = () => {
+  const checkboxesRef = useRef([]);
+
+  const handleCheckboxChange = (index) => {
+    const isChecked = checkboxesRef.current[index].checked;
+    console.log(`Checkbox ${index + 1} is checked: ${isChecked}`);
+  };
+
+  return (
+    <div>
+      {[1, 2, 3].map((index) => (
+        <div key={index}>
+          <input
+            type="checkbox"
+            ref={(el) => (checkboxesRef.current[index] = el)}
+            onChange={() => handleCheckboxChange(index)}
+          />
+          <label>{`Checkbox ${index}`}</label>
+        </div>
+      ))}
+
+      <button onClick={() => handleCheckboxChange(1)}>Check Checkbox 1 Status</button>
+      <button onClick={() => handleCheckboxChange(2)}>Check Checkbox 2 Status</button>
+      <button onClick={() => handleCheckboxChange(3)}>Check Checkbox 3 Status</button>
+    </div>
+  );
+};
+
+export default CheckboxGroup;

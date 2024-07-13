@@ -1,0 +1,24 @@
+import React, { useState } from 'react';
+import ArrayForm from './ArrayForm'; // Import the ArrayForm component
+
+const ParentComponent = () => {
+  const [showArrayForm, setShowArrayForm] = useState(false);
+
+  const handleShowArrayForm = () => {
+    setShowArrayForm(true);
+  };
+
+  return (
+    <div>
+      <form>
+        {/* Your form fields here */}
+        {showArrayForm && <ArrayForm />}
+        {/* Only show the ArrayForm when showArrayForm state is true */}
+      </form>
+      <button onClick={handleShowArrayForm}>Show Array Form</button>
+      {/* Button to show the hidden ArrayForm */}
+    </div>
+  );
+};
+
+export default ParentComponent;

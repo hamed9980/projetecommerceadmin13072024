@@ -1,0 +1,10 @@
+const array1 = [{id: 1, name: 'Alice'}, {id: 2, name: 'Bob'}, {id: 3, name: 'Charlie'}];
+const array2 = [{id: 1, name: 'Alice'}, {id: 3, name: 'Charlie'}, {id: 4, name: 'David'}];
+
+// Function to find objects appearing in array 1 but not in array 2
+const findObjectsNotInArray2 = (arr1, arr2) => {
+  return arr1.filter(obj1 => !arr2.some(obj2 => obj1.id === obj2.id));
+};
+
+const objectsNotInArray2 = findObjectsNotInArray2(array1, array2);
+console.log(objectsNotInArray2);
